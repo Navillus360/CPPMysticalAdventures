@@ -53,6 +53,11 @@ int Player::getXP()
 {
 	return currentXP;
 }
+
+int Player::getLevel()
+{
+	return level;
+}
 #pragma endregion
 
 #pragma region Mutators
