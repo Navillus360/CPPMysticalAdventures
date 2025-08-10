@@ -10,6 +10,7 @@ public:
 	int getGold();
 	int getXP();
 	int getLevel();
+	int getMaxHealth();
 #pragma endregion
 
 #pragma region Mutators

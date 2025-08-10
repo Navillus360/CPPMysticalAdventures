@@ -58,6 +58,11 @@ int Player::getLevel()
 {
 	return level;
 }
+
+int Player::getMaxHealth()
+{
+	return 0;
+}
 #pragma endregion
 
 #pragma region Mutators

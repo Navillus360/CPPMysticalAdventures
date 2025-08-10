@@ -125,6 +125,7 @@
   <ItemGroup>
     <ClCompile Include="Dungeon.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="InteractionManager.cpp" />
     <ClCompile Include="MysticalAdventures.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
@@ -132,6 +133,7 @@
     <ClInclude Include="Dungeon.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyTypes.h" />
+    <ClInclude Include="InteractionManager.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
