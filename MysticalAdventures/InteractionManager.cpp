@@ -30,14 +30,14 @@ void InteractionManager::crossRoads()
 #pragma region Town Interactions
 void InteractionManager::town()
 {
-	std::cout << "As you enter the town you see three locations to which you can visit: \n1: The blacksmith \n2: The alchemist \n3: The guild \n4: Go back to the crossroads \nWhat's next? \n> ";
+	std::cout << "As you enter the town you see three locations to which you can visit: \n1: The blacksmith \n2: The tavern \n3: The guild \n4: Go back to the crossroads \nWhat's next? \n> ";
 	std::cin >> choice;
 	switch (choice) {
 	case 1:
 		std::cout << "Go to the blacksmith";
 		break;
 	case 2:
-		std::cout << "Go the the alchemist";
+		std::cout << "Go the the tavern";
 		break;
 	case 3:
 		std::cout << "Go the guild";
@@ -48,6 +48,59 @@ void InteractionManager::town()
 	default:
 		std::cout << "Please choose a valid option!";
 		town();
+	}
+}
+
+void InteractionManager::blacksmith()
+{
+	std::cout << "Entering the blacksmiths workshop you feel an overwhelming amount of heat in an instant. Without skipping a beat or even stopping the blacksmith looks to you with a somewhat intimidating expressions and coldly asks . \n1: Upgrade sword {310 Gold + 5 Damage} \n2: Upgrade Armour {240 Gold + 25 Health} \n3: Exit workshop \n> ";
+	std::cin >> choice;
+	switch (choice) {
+	case 1:
+		std::cout << "Sword upgraded";
+		break;
+	case 2:
+		std::cout << "Armour upgraded";
+	case 3:
+		town();
+	default:
+		std::cout << "Please choose a valid option!";
+		blacksmith();
+	}
+}
+
+void InteractionManager::tavern()
+{
+	std::cout << "Entering the tavern you are greeted by an old elf who is the owner of the building. After a brief conversation, the elf offers a room for the night, for a price {30 gold + restored health} 1: Rent room \n2: Exit tavern \n>"; 
+	std::cin >> choice;
+	switch (choice) {
+	case 1:
+		std::cout << "Health fully restored";
+		break;
+	case 2:
+		town();
+	default:
+		std::cout << "Please choose a valid option!";
+		tavern();
+	}
+}
+
+void InteractionManager::guild()
+{
+	if (player.getLevel() == 5) {
+		std::cout << "Upon entering the guild you see the main area huddled with adventures of diffrent ranks murmuring amongst each other. The only words that you can piece together is 'Dragon' and 'Castle'. Whatever it is, seems like no one is going out there to investigate. Better make sure your well prepared adventurer... \n1: Exit \n> ";
+	}
+	else
+	{
+		std::cout << "Entering the guild you see various types of adventurers in the main area, some in groups, some by themselves and some of the popular ones trying to outshine the other. Walking through to the crowd and reaching the reception you are greeted by a staff member on how you can rank up within the guild: \n\n'Heading to the dungeon from the crossroads you'll find items which can restore your health or give you some extra XP, but the main objective is to defeat the enemies you may encounter as they'll give you both XP and gold rewards. \n\nSounds easy right? Well, as you level up so will the monsters so make sure you can defeat them or run if you can. Good luck!' 1: Exit \n> ";
+	}
+	std::cin >> choice;
+	switch (choice) {
+	case 1:
+		town();
+	default:
+		std::cout << "Please choose a valid option!";
+		guild();
 	}
 }
 

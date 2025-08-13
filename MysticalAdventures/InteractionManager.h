@@ -10,7 +10,7 @@ public:
 	//Town interactions (buy items)
 	void town();
 	void blacksmith();
-	void alchemist();
+	void tavern();
 	void guild();
 	
 	//Dungeon interactions (fight enemies)
