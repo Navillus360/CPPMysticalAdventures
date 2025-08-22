@@ -7,6 +7,7 @@ class Dungeon {
 public: 
 	Dungeon(Player& p);
 	void generateDungeon();
+	Enemy getRandomEnemy();
 
 private:
 	int numOfEnemies;

@@ -1,6 +1,6 @@
 #include "Dungeon.h"
 
-Dungeon::Dungeon(Player& p) : player(p){}
+Dungeon::Dungeon(Player& p) : player(p) {}
 
 void Dungeon::generateDungeon()
 {
@@ -9,6 +9,13 @@ void Dungeon::generateDungeon()
 	for (int i = 0; i < numOfEnemies; i++) {
 		createEnemy();
 	}
+}
+
+Enemy Dungeon::getRandomEnemy()
+{
+	int index = rand() % enemies.size();
+	Enemy randomEnemy = enemies[index];
+	return randomEnemy;
 }
 
 void Dungeon::createEnemy()

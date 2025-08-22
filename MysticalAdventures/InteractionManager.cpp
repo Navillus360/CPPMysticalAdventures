@@ -1,7 +1,7 @@
 #include "InteractionManager.h"
 #include <iostream>
 
-InteractionManager::InteractionManager(Player& p) : player(p) {}
+InteractionManager::InteractionManager(Player& p, Dungeon& d) : r_player(p), r_dungeon(d) {}
 
 void InteractionManager::crossRoads()
 {
@@ -11,15 +11,19 @@ void InteractionManager::crossRoads()
 	switch (choice) {
 	case 1:
 		std::cout << "Go to the town";
+		town();
 		break;
 	case 2:
 		std::cout << "Go the the dungeon";
+		dungeon();
 		break;
 	case 3:
 		std::cout << "Go the house";
+		house();
 		break;
 	case 4:
 		std::cout << "Go the castle";
+		castle();
 		break;
 	default:
 		std::cout << "Please choose a valid option!";
@@ -35,12 +39,15 @@ void InteractionManager::town()
 	switch (choice) {
 	case 1:
 		std::cout << "Go to the blacksmith";
+		blacksmith();
 		break;
 	case 2:
 		std::cout << "Go the the tavern";
+		tavern();
 		break;
 	case 3:
 		std::cout << "Go the guild";
+		guild();
 		break;
 	case 4:
 		crossRoads();
@@ -71,11 +78,11 @@ void InteractionManager::blacksmith()
 
 void InteractionManager::tavern()
 {
-	std::cout << "Entering the tavern you are greeted by an old elf who is the owner of the building. After a brief conversation, the elf offers a room for the night, for a price {30 gold + restored health} 1: Rent room \n2: Exit tavern \n>"; 
+	std::cout << "Entering the tavern you are greeted by an old elf who is the owner of the building. After a brief conversation, the elf offers a room for the night, for a price {30 gold + restored health} 1: Rent room \n2: Exit tavern \n>";
 	std::cin >> choice;
 	switch (choice) {
 	case 1:
-		std::cout << "Health fully restored";
+		//check if player has enough gold
 		break;
 	case 2:
 		town();
@@ -87,7 +94,7 @@ void InteractionManager::tavern()
 
 void InteractionManager::guild()
 {
-	if (player.getLevel() == 5) {
+	if (r_player.getLevel() == 5) {
 		std::cout << "Upon entering the guild you see the main area huddled with adventures of diffrent ranks murmuring amongst each other. The only words that you can piece together is 'Dragon' and 'Castle'. Whatever it is, seems like no one is going out there to investigate. Better make sure your well prepared adventurer... \n1: Exit \n> ";
 	}
 	else
@@ -103,14 +110,16 @@ void InteractionManager::guild()
 		guild();
 	}
 }
-
 #pragma endregion
 
 #pragma region Dungeon Interactions
 void InteractionManager::dungeon()
 {
-	//needs to be expanded to allow players to not always fight enemies
-	//e.g find random items to restore health or boost XP
+	Enemy enemy = r_dungeon.getRandomEnemy();
+	std::cout << "You encountered a " << enemy.toString();
+	while (r_player.getHealth() > 0 || enemy.getHealth() > 0) {
+		std::cout << "Player Health: " << r_player.getHealth() << "\tEnemy Health: " << enemy.getHealth();
+	}
 }
 #pragma endregion
 
@@ -121,7 +130,7 @@ void InteractionManager::house()
 		std::cout << "Ahead of you is an empty yet furbished house for sale. A nice place to restore health without paying for potions. \nBuy? {10000 Gold} \n1: Yes \n2: No \n> ";
 		std::cin >> choice;
 		switch (choice) {
-		case 1: 
+		case 1:
 			//check if the player has enough gold
 			//if have enough gold then call this method again
 			break;
@@ -137,7 +146,7 @@ void InteractionManager::house()
 	else
 	{
 		std::cout << "After entering the house you head to your comfy bed and rest for a few hours. Feeling refreshed your health has been restored to full";
-		player.setHealth(player.getMaxHealth());
+		r_player.setHealth(r_player.getMaxHealth());
 		crossRoads();
 	}
 }
@@ -146,6 +155,30 @@ void InteractionManager::house()
 #pragma region Castle Interactions
 void InteractionManager::castle()
 {
-	//Final boss, only allow the player when they've reached lvl5
+	if (r_player.getLevel() >= 5) {
+		std::cout << "Upon arriving at the castle enterance you only hear the eerie silence in the wind and an intense aura coming from the air, one you feel more than ready toward and face the danger head on. \n1: Enter the castle <NO RETURN!> \n2: Exit \n> ";
+		std::cin >> choice;
+		switch (choice) {
+		case 1:
+			//enter combat with the final boss
+		case 2:
+			crossRoads();
+		default:
+			std::cout << "Please choose a valid option!";
+			castle();
+		}
+	}
+	else {
+		std::cout << "Upon arriving at the castle enterance you only hear the eerie silence in the wind and an intense aura coming from the air. Hanging around for too long will certainly end in your demise, come back when your stronger. \n1: Exit \n>";
+		std::cin >> choice;
+		switch (choice) {
+		case 1:
+			crossRoads();
+		default:
+			std::cout << "Please choose a valid option!";
+			castle();
+		}
+	}
+	//Final boss, only allow the player inside when they've reached lvl5
 }
 #pragma endregion

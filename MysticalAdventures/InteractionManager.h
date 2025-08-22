@@ -1,9 +1,10 @@
 #pragma once
 #include "Player.h"
+#include "Dungeon.h"
 
 class InteractionManager {
 public:
-	InteractionManager(Player& p);
+	InteractionManager(Player& p, Dungeon& d);
 	
 	void crossRoads();
 	
@@ -25,5 +26,6 @@ public:
 private:
 	int choice;
 	bool houseBought;
-	Player& player;
+	Player& r_player;
+	Dungeon& r_dungeon;
 };

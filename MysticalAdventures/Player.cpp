@@ -17,8 +17,10 @@ void Player::checkXP()
 	if (currentXP >= xpToNextLevel()) {
 		level++;
 		damage += 3 + (rand() % 6);
-		health = maxHealth + 50;
+		maxHealth += 100;
+		health = maxHealth;
 		currentXP = 0;
+		std::cout << "Level up! \nXP To next level " << xpToNextLevel() << " " << "New Damage: " << damage << " " << "New Health: " << health << "\n";
 	}
 }
 

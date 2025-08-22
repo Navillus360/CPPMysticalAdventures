@@ -56,6 +56,11 @@ Enemy::Enemy(EnemyTypes newEnemyType) {
 		xpReward = 110;
 		goldReward = 95;
 		break;
+	case dragon:
+		health = 500;
+		damage = 17;
+		xpReward = 400;
+		goldReward = 200;
 	}
 }
 

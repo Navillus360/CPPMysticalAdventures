@@ -2,5 +2,5 @@
 enum EnemyTypes {
 	goblin, bat, skeleton,
 	mage, bandit, orc,
-	rogueKnight, demon, mutatedGoblin
+	rogueKnight, demon, mutatedGoblin, dragon
 };
