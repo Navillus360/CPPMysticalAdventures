@@ -44,6 +44,34 @@ void InteractionManager::crossRoads()
 	}
 }
 
+void InteractionManager::combat(Enemy& r_enemy)
+{
+	while (r_player.getHealth() > 0 || r_enemy.getHealth() > 0) {
+		std::cout << "Player Health: " << r_player.getHealth() << "\tEnemy Health: " << r_enemy.getHealth();
+		if (r_player.getHealth() < 0) {
+			gameEnd(false);
+			break;
+		}
+		else if (r_enemy.getHealth() < 0) {
+			//break this while loop and print rewards
+			//Remove the defeated enemy from the dungeon
+			//Also print if the player wishes to continue or return to the crossroads
+		}
+	}
+}
+
+void InteractionManager::gameEnd(bool playerWon)
+{
+	switch (playerWon) {
+	case true:
+		std::cout << "You slain the dragon! \nThe town's citizens recognise you as a hero and the threat around the country has been reduced! \n\n\tGAME OVER";
+		break;
+	case false:
+		std::cout << "You were slain in battle. Whilst your bravery will never be forgotten, \nthe citizens now have no one to save them from the dragons wrath. \n\n\tGAME OVER";
+		break;
+	}
+}
+
 #pragma region Purchaseable assets
 void InteractionManager::PurchaseAsset(int cost, PurchaseableAssets asset)
 {
@@ -98,35 +126,38 @@ void InteractionManager::PurchaseAsset(int cost, PurchaseableAssets asset)
 void InteractionManager::town()
 {
 	inTown = true;
-	std::cout << "As you enter the town you see three locations to which you can visit: \n1: The blacksmith \n2: The tavern \n3: The guild \n4: Go back to the crossroads \nWhat's next? \n> ";
-	std::cin >> choice;
-	switch (choice) {
-	case 1:
-		system("cls");
-		blacksmith();
-		break;
-	case 2:
-		system("cls");
-		tavern();
-		break;
-	case 3:
-		system("cls");
-		guild();
-		break;
-	case 4:
-		system("cls");
-		crossRoads();
-		break;
-	default:
-		system("cls");
-		std::cout << "Please choose a valid option!";
-		town();
+	while (inTown) {
+		std::cout << "As you enter the town you see three locations to which you can visit: \n1: The blacksmith \n2: The tavern \n3: The guild \n4: Go back to the crossroads \nWhat's next? \n> ";
+		std::cin >> choice;
+		switch (choice) {
+		case 1:
+			system("cls");
+			blacksmith();
+			break;
+		case 2:
+			system("cls");
+			tavern();
+			break;
+		case 3:
+			system("cls");
+			guild();
+			break;
+		case 4:
+			system("cls");
+			inTown = false;
+			crossRoads();
+			break;
+		default:
+			system("cls");
+			std::cout << "Please choose a valid option!";
+			town();
+		}
 	}
 }
 
 void InteractionManager::blacksmith()
 {
-	std::cout << "Entering the blacksmiths workshop you feel an overwhelming amount of heat in an instant. \nWithout skipping a beat or even stopping the blacksmith looks to you\nwith a somewhat intimidating expressions and coldly asks 'what do you want?' \n1: Upgrade sword {310 Gold + 5 Damage} \n2: Upgrade Armour {240 Gold + 25 Health} \n3: Exit workshop \n> ";
+	std::cout << "Gold: " << r_player.getGold() << "Entering the blacksmiths workshop you feel an overwhelming amount of heat in an instant. \nWithout skipping a beat or even stopping the blacksmith looks to you\nwith a somewhat intimidating expressions and coldly asks 'what do you want?' \n1: Upgrade sword {310 Gold + 5 Damage} \n2: Upgrade Armour {240 Gold + 25 Health} \n3: Exit workshop \n> ";
 	std::cin >> choice;
 	switch (choice) {
 	case 1:
@@ -148,7 +179,7 @@ void InteractionManager::blacksmith()
 
 void InteractionManager::tavern()
 {
-	std::cout << "Entering the tavern you are greeted by an old elf who is the owner of the building. After a brief conversation, the elf offers a room for the night, for a price {30 gold + restored health} 1: Rent room \n2: Exit tavern \n>";
+	std::cout << "Gold: " << r_player.getGold() << "Entering the tavern you are greeted by an old elf who is the owner of the building. After a brief conversation, the elf offers a room for the night, for a price {30 gold + restored health} 1: Rent room \n2: Exit tavern \n>";
 	std::cin >> choice;
 	switch (choice) {
 	case 1:
@@ -191,11 +222,12 @@ void InteractionManager::guild()
 #pragma region Dungeon Interactions
 void InteractionManager::dungeon()
 {
+	inDungeon = true;
+	r_dungeon.generateDungeon();
 	Enemy enemy = r_dungeon.getRandomEnemy();
 	std::cout << "You encountered a " << enemy.toString();
-	while (r_player.getHealth() > 0 || enemy.getHealth() > 0) {
-		std::cout << "Player Health: " << r_player.getHealth() << "\tEnemy Health: " << enemy.getHealth();
-	}
+	while (inDungeon)
+		combat(enemy);
 }
 #pragma endregion
 
@@ -203,29 +235,33 @@ void InteractionManager::dungeon()
 void InteractionManager::house()
 {
 	inHouse = true;
-	if (!houseBought) {
-		std::cout << "Ahead of you is an empty yet furbished house for sale. A nice place to restore health without paying for potions. \nBuy? {10000 Gold} \n1: Yes \n2: No \n> ";
-		std::cin >> choice;
-		switch (choice) {
-		case 1:
-			PurchaseAsset(10000, playerHouse);
-			house();
-			break;
-		case 2:
-			crossRoads();
-			break;
-		default:
-			system("cls");
-			std::cout << "Please choose a valid option!";
-			house();
-			break;
+	while (inHouse) {
+		if (!houseBought) {
+			std::cout << "Gold: " << r_player.getGold() << "Ahead of you is an empty yet furbished house for sale. A nice place to restore health without paying for potions. \nBuy? {10000 Gold} \n1: Yes \n2: No \n> ";
+			std::cin >> choice;
+			switch (choice) {
+			case 1:
+				PurchaseAsset(10000, playerHouse);
+				house();
+				break;
+			case 2:
+				inHouse = false;
+				crossRoads();
+				break;
+			default:
+				system("cls");
+				std::cout << "Please choose a valid option!";
+				house();
+				break;
+			}
 		}
-	}
-	else
-	{
-		std::cout << "After entering the house you head to your comfy bed and rest for a few hours. Feeling refreshed your health has been restored to full.";
-		r_player.setHealth(r_player.getMaxHealth());
-		crossRoads();
+		else
+		{
+			std::cout << "After entering the house you head to your comfy bed and rest for a few hours. Feeling refreshed your health has been restored to full.";
+			r_player.setHealth(r_player.getMaxHealth());
+			crossRoads();
+			inHouse = false;
+		}
 	}
 }
 #pragma endregion
@@ -234,33 +270,37 @@ void InteractionManager::house()
 void InteractionManager::castle()
 {
 	inCastle = true;
-	if (r_player.getLevel() >= 5) {
-		std::cout << "Upon arriving at the castle enterance you only hear the eerie silence in the wind and an intense aura coming from the air, one you feel more than ready toward and face the danger head on. \n1: Enter the castle <NO RETURN!> \n2: Exit \n> ";
-		std::cin >> choice;
-		switch (choice) {
-		case 1:
-			//enter combat with the final boss
-		case 2:
-			crossRoads();
-			break;
-		default:
-			system("cls");
-			std::cout << "Please choose a valid option!";
-			castle();
-			break;
+	while (inCastle) {
+		if (r_player.getLevel() >= 5) {
+			std::cout << "Upon arriving at the castle enterance you only hear the eerie silence in the wind and an intense aura coming from the air, one you feel more than ready toward and face the danger head on. \n1: Enter the castle <NO RETURN!> \n2: Exit \n> ";
+			std::cin >> choice;
+			switch (choice) {
+			case 1:
+				//enter combat with the final boss
+			case 2:
+				inCastle = false;
+				crossRoads();
+				break;
+			default:
+				system("cls");
+				std::cout << "Please choose a valid option!";
+				castle();
+				break;
+			}
 		}
-	}
-	else {
-		std::cout << "Upon arriving at the castle enterance you only hear the eerie silence in the wind and an intense aura coming from the air. Hanging around for too long will certainly end in your demise, come back when your stronger. \n1: Exit \n>";
-		std::cin >> choice;
-		switch (choice) {
-		case 1:
-			crossRoads();
-			break;
-		default:
-			system("cls");
-			std::cout << "Please choose a valid option!";
-			castle();
+		else {
+			std::cout << "Upon arriving at the castle enterance you only hear the eerie silence in the wind and an intense aura coming from the air. Hanging around for too long will certainly end in your demise, come back when your stronger. \n1: Exit \n>";
+			std::cin >> choice;
+			switch (choice) {
+			case 1:
+				inCastle = false;
+				crossRoads();
+				break;
+			default:
+				system("cls");
+				std::cout << "Please choose a valid option!";
+				castle();
+			}
 		}
 	}
 	//Final boss, only allow the player inside when they've reached lvl5

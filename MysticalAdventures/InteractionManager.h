@@ -9,6 +9,8 @@ public:
 
 	void crossRoads();
 	void PurchaseAsset(int cost, PurchaseableAssets assets);
+	void combat(Enemy& r_enemy);
+	void gameEnd(bool playerWon);
 	
 	//Town interactions (buy items)
 	void town();
