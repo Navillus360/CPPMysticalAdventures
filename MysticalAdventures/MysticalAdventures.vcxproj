@@ -135,6 +135,7 @@
     <ClInclude Include="EnemyTypes.h" />
     <ClInclude Include="InteractionManager.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PurchaseableAssets.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

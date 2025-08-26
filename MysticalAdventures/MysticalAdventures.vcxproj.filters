@@ -47,5 +47,8 @@
     <ClInclude Include="InteractionManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PurchaseableAssets.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

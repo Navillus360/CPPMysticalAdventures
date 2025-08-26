@@ -63,7 +63,12 @@ int Player::getLevel()
 
 int Player::getMaxHealth()
 {
-	return 0;
+	return maxHealth;
+}
+
+int Player::getDamage()
+{
+	return damage;
 }
 #pragma endregion
 
@@ -81,5 +86,10 @@ void Player::setXP(int newXP)
 void Player::setGold(int newGold)
 {
 	gold = newGold;
+}
+
+void Player::setDamage(int newDamage)
+{
+	damage = newDamage;
 }
 #pragma endregion
