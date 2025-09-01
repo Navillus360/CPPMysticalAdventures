@@ -9,7 +9,6 @@ public:
 
 	void crossRoads();
 	void PurchaseAsset(int cost, PurchaseableAssets assets);
-	void combat(Enemy& r_enemy);
 	void gameEnd(bool playerWon);
 	
 	//Town interactions (buy items)
@@ -20,12 +19,16 @@ public:
 	
 	//Dungeon interactions (fight enemies)
 	void dungeon();
+	void dungeonCombat(Enemy& enemy);
+	void combatEnd();
+	void flee();
 	
 	//House interaction (purchasable property)
 	void house();
 	
 	//Castle interactions (final boss)
 	void castle();
+	void finalBossFight();
 
 private:
 	int choice;

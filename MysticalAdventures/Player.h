@@ -19,6 +19,7 @@ public:
 	void setXP(int newXP);
 	void setGold(int newGold);
 	void setDamage(int newDamage);
+	void setMaxHealth(int newMaxHealth);
 #pragma endregion
 
 private:

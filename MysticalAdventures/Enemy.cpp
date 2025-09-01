@@ -79,6 +79,12 @@ std::string Enemy::toString()
 	}
 }
 
+void Enemy::printRewards()
+{
+	std::cout << "You defeated the " << toString() << "! \nGold Reward: " << goldReward << "\tXP Reward: " << xpReward;
+}
+
+#pragma region Accessors
 int Enemy::getHealth() {
 	return health;
 }
@@ -102,4 +108,12 @@ EnemyTypes Enemy::getEnemyType()
 {
 	return enemyType;
 }
+#pragma endregion
+
+#pragma region Mutators
+void Enemy::setHealth(int newHealth) {
+	health = newHealth;
+}
+#pragma endregion
+
 

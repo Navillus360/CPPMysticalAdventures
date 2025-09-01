@@ -5,6 +5,7 @@ class Enemy {
 public:
 	Enemy(EnemyTypes newEnemyType);
 	std::string toString();
+	void printRewards();
 
 #pragma region Accessors
 	int getHealth();
@@ -14,6 +15,9 @@ public:
 	EnemyTypes getEnemyType();
 #pragma endregion
 
+#pragma region Mutators
+	void setHealth(int newHealth);
+#pragma endregion
 
 private:
 	int health, damage, xpReward, goldReward;

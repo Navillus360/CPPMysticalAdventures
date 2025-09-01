@@ -6,16 +6,29 @@ void Dungeon::generateDungeon()
 {
 	srand(time(0));
 	numOfEnemies = 1 + rand() % 21;
-	for (int i = 0; i < numOfEnemies; i++) {
+	for (int i = 0; i < numOfEnemies; i++)
 		createEnemy();
-	}
 }
 
+
+#pragma region Accessors
 Enemy Dungeon::getRandomEnemy()
 {
 	int index = rand() % enemies.size();
 	Enemy randomEnemy = enemies[index];
 	return randomEnemy;
+}
+
+std::vector<Enemy> Dungeon::getEnemies()
+{
+	return enemies;
+}
+#pragma endregion
+
+#pragma region Enemy Create/Delete
+void Dungeon::removeEnemy(Enemy& enemy)
+{
+	enemies.push_back(enemy);
 }
 
 void Dungeon::createEnemy()
@@ -26,6 +39,7 @@ void Dungeon::createEnemy()
 		EnemyTypes enemyType = static_cast<EnemyTypes>(randEnemyIndex);
 		Enemy randomEnemy(enemyType);
 		enemies.push_back(randomEnemy);
+		break;
 	}
 	case 2: {
 		int randEnemyIndex = rand() % 3;
@@ -59,3 +73,4 @@ void Dungeon::createEnemy()
 	}
 	}
 }
+#pragma endregion

@@ -92,4 +92,9 @@ void Player::setDamage(int newDamage)
 {
 	damage = newDamage;
 }
+
+void Player::setMaxHealth(int newMaxHealth)
+{
+	maxHealth = newMaxHealth;
+}
 #pragma endregion
