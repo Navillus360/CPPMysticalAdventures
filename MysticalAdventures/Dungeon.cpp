@@ -4,6 +4,7 @@ Dungeon::Dungeon(Player& p) : player(p) {}
 
 void Dungeon::generateDungeon()
 {
+	enemies.clear();
 	srand(time(0));
 	numOfEnemies = 1 + rand() % 21;
 	for (int i = 0; i < numOfEnemies; i++)
@@ -28,7 +29,8 @@ std::vector<Enemy> Dungeon::getEnemies()
 #pragma region Enemy Create/Delete
 void Dungeon::removeEnemy(Enemy& enemy)
 {
-	enemies.push_back(enemy);
+	auto iterator = find(enemies.begin(), enemies.end(), enemy);
+	enemies.erase(iterator);
 }
 
 void Dungeon::createEnemy()
@@ -49,14 +51,6 @@ void Dungeon::createEnemy()
 		break;
 	}
 	case 3: {
-		int randEnemyIndex = rand() % 4;
-		EnemyTypes enemyType = static_cast<EnemyTypes>(randEnemyIndex);
-		Enemy randomEnemy(enemyType);
-		enemies.push_back(randomEnemy);
-		break;
-	}
-
-	case 4: {
 		int randEnemyIndex = rand() % 5;
 		EnemyTypes enemyType = static_cast<EnemyTypes>(randEnemyIndex);
 		Enemy randomEnemy(enemyType);
@@ -64,8 +58,16 @@ void Dungeon::createEnemy()
 		break;
 	}
 
-	case 5: {
+	case 4: {
 		int randEnemyIndex = rand() % 6;
+		EnemyTypes enemyType = static_cast<EnemyTypes>(randEnemyIndex);
+		Enemy randomEnemy(enemyType);
+		enemies.push_back(randomEnemy);
+		break;
+	}
+
+	case 5: {
+		int randEnemyIndex = rand() % 9;
 		EnemyTypes enemyType = static_cast<EnemyTypes>(randEnemyIndex);
 		Enemy randomEnemy(enemyType);
 		enemies.push_back(randomEnemy);

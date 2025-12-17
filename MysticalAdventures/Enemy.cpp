@@ -3,34 +3,34 @@ Enemy::Enemy(EnemyTypes newEnemyType) {
 	enemyType = newEnemyType;
 	switch (enemyType) {
 	case goblin:
-		health = 60;
+		health = 12;
+		damage = 3;
+		xpReward = 3;
+		goldReward = 5;
+		break;
+	case bat:
+		health = 6;
 		damage = 2;
 		xpReward = 2;
 		goldReward = 3;
 		break;
-	case bat:
-		health = 45;
-		damage = 2;
-		xpReward = 2;
-		goldReward = 2;
-		break;
 	case skeleton:
 		health = 80;
 		damage = 3;
-		xpReward = 1;
-		goldReward = 4;
+		xpReward = 8;
+		goldReward = 7;
 		break;
 	case mage:
 		health = 130;
 		damage = 7;
-		xpReward = 30;
-		goldReward = 15;
+		xpReward = 35;
+		goldReward = 20;
 		break;
 	case bandit:
 		health = 125;
 		damage = 6;
 		xpReward = 25;
-		goldReward = 20;
+		goldReward = 25;
 		break;
 	case orc:
 		health = 175;
@@ -59,8 +59,8 @@ Enemy::Enemy(EnemyTypes newEnemyType) {
 	case dragon:
 		health = 500;
 		damage = 17;
-		xpReward = 400;
-		goldReward = 200;
+		xpReward = 700;
+		goldReward = 800;
 	}
 }
 
@@ -81,7 +81,7 @@ std::string Enemy::toString()
 
 void Enemy::printRewards()
 {
-	std::cout << "You defeated the " << toString() << "! \nGold Reward: " << goldReward << "\tXP Reward: " << xpReward;
+	std::cout << "You defeated the " << toString() << "! \nGold Reward: " << goldReward << "\tXP Reward: " << xpReward << "\n";
 }
 
 #pragma region Accessors

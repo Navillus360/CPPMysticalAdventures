@@ -31,9 +31,13 @@ public:
 	void finalBossFight();
 
 private:
-	int choice;
+	std::string choice;
 	bool houseBought;
-	bool exploring, inHouse, inDungeon, inTown, inCastle;
+	bool exploring, inHouse, inDungeon, inTown, inCastle, isGameEnd;
 	Player& r_player;
 	Dungeon& r_dungeon;
+	enum class string_code {
+		cmd1, cmd2, cmd3, cmd4, unknown
+	};
+	string_code hashString(const::std::string str);
 };
