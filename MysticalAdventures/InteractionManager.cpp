@@ -18,7 +18,7 @@ void InteractionManager::crossRoads()
 {
 	system("cls");
 	exploring = true;
-	while (exploring && !inHouse && !inDungeon && !inTown && !inCastle) {
+	while (exploring && !inHouse && !inDungeon && !inTown && !inCastle && !isGameEnd) {
 		std::cout << "You stand in the middle of the crossroads: \n1: Go to the town \n2: Go to the dungeon \n3: Go to the house \n4: Go to the castle \nWhere would you like to go adventurer?\n> ";
 		choice;
 		std::cin >> choice;
@@ -52,9 +52,11 @@ void InteractionManager::gameEnd(bool playerWon)
 	isGameEnd = true;
 	switch (playerWon) {
 	case true:
+		system("cls");
 		std::cout << "You slain the dragon! \nThe town's citizens recognise you as a hero and the threat around the country has been reduced! \n\n\tGAME OVER";
 		break;
 	case false:
+		system("cls");
 		std::cout << "You were slain in battle. Whilst your bravery will never be forgotten, \nthe citizens now have no one to save them from the dragons wrath. \n\n\tGAME OVER";
 		break;
 	}
@@ -182,10 +184,12 @@ void InteractionManager::tavern()
 	std::cin >> choice;
 	switch (hashString(choice)) {
 	case string_code::cmd1:
+		system("cls");
 		PurchaseAsset(15, tavernRoom);
 		tavern();
 		break;
 	case string_code::cmd2:
+		system("cls");
 		town();
 		break;
 	default:
@@ -329,10 +333,12 @@ void InteractionManager::house()
 			std::cin >> choice;
 			switch (hashString(choice)) {
 			case string_code::cmd1:
-				PurchaseAsset(10000, playerHouse);
+				system("cls");
+				PurchaseAsset(350, playerHouse);
 				house();
 				break;
 			case string_code::cmd2:
+				system("cls");
 				inHouse = false;
 				crossRoads();
 				break;
@@ -345,6 +351,7 @@ void InteractionManager::house()
 		}
 		else
 		{
+			system("cls");
 			std::cout << "After entering the house you head to your comfy bed and rest for a few hours. Feeling refreshed your health has been restored to full.";
 			r_player.setHealth(r_player.getMaxHealth());
 			crossRoads();
@@ -364,8 +371,11 @@ void InteractionManager::castle()
 			std::cin >> choice;
 			switch (hashString(choice)) {
 			case string_code::cmd1:
+				system("cls");
 				finalBossFight();
+				break;
 			case string_code::cmd2:
+				system("cls");
 				inCastle = false;
 				crossRoads();
 				break;
@@ -396,23 +406,29 @@ void InteractionManager::castle()
 
 void InteractionManager::finalBossFight() {
 	Enemy finalBoss = EnemyTypes::dragon;
-	while ((r_player.getHealth() > 0 || finalBoss.getHealth() > 0) && !isGameEnd) {
+	while ((r_player.getHealth() > 0 || finalBoss.getHealth() > 0)) {
 		std::cout << "This is your final fight against a dragon boss, make it count.\n" << "Player Health: " << r_player.getHealth() << "\tEnemy Health: " << finalBoss.getHealth() << "\n1: Attack \n> ";
-		std::cin >> choice;
 		if (r_player.getHealth() <= 0) {
+			inCastle = false;
 			gameEnd(false);
 			break;
 		}
 		else if (finalBoss.getHealth() <= 0) {
+			inCastle = false;
 			gameEnd(true);
 			break;
 		}
+		std::cin >> choice;
 		switch (hashString(choice)) {
 		case string_code::cmd1:
+			system("cls");
 			finalBoss.setHealth(finalBoss.getHealth() - r_player.getDamage());
 			r_player.setHealth(r_player.getHealth() - finalBoss.getDamage());
+			break;
 		default:
+			system("cls");
 			std::cout << "Please choose a valid option!";
+			break;
 		}
 	}
 }

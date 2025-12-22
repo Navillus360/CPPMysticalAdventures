@@ -20,7 +20,7 @@ void Player::checkXP()
 		maxHealth += 100;
 		health = maxHealth;
 		currentXP = 0;
-		std::cout << "Level up! \nXP To next level " << xpToNextLevel() << " " << "New Damage: " << damage << " " << "New Health: " << health << "\n";
+		std::cout << "\nLevel up! \nXP To next level " << xpToNextLevel() << " " << "New Damage: " << damage << " " << "New Health: " << health << "\n";
 	}
 }
 
